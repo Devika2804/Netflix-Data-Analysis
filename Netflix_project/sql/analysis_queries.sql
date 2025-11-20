@@ -92,24 +92,8 @@ ORDER BY total_shows DESC
 LIMIT 10;
 
 
--- 4️⃣ Adult Content Ratio by Country
-SELECT 
-    c.country_name,
-    COUNT(CASE WHEN ns.rating IN ('TV-MA', 'R', 'NC-17') THEN 1 END) AS adult_titles,
-    COUNT(*) AS total_titles,
-    ROUND(
-        (COUNT(CASE WHEN ns.rating IN ('TV-MA', 'R', 'NC-17') THEN 1 END) / COUNT(*)) * 100, 
-        2
-    ) AS adult_content_ratio
-FROM netflix_shows ns
-JOIN countries c ON ns.country_id = c.country_id
-GROUP BY c.country_name
-HAVING total_titles > 20
-ORDER BY adult_content_ratio DESC
-LIMIT 10;
 
-
--- 5️⃣ Most Popular Genres by Year
+-- 4️⃣ Most Popular Genres by Year
 with cte as(SELECT 
     ns.release_date,
     g.genre_name,
